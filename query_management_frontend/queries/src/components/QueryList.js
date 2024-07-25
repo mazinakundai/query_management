@@ -1,24 +1,14 @@
-// QueryList.js
-import React, { useState, useEffect } from 'react';
-import { List } from '@mui/material';
-import { fetchQueries } from '../api';
+import React from 'react';
+import { List, ListItem } from '@mui/material';
 import QueryCard from './QueryCard';
 
-const QueryList = () => {
-  const [queries, setQueries] = useState([]);
-
-  useEffect(() => {
-    fetchQueries().then(response => {
-      setQueries(response.data);
-    }).catch(error => {
-      console.error('Error fetching queries:', error);
-    });
-  }, []);
-
+const QueryList = ({ queries }) => {
   return (
     <List>
       {queries.map(query => (
-        <QueryCard key={query.id} query={query} />
+        <ListItem key={query.query_id}>
+          <QueryCard query={query} />
+        </ListItem>
       ))}
     </List>
   );

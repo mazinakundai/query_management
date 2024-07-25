@@ -1,4 +1,3 @@
-// QueryCard.js
 import React from 'react';
 import { Card, CardContent, Typography, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -21,26 +20,36 @@ const getIcon = (queryType) => {
 
 const QueryCard = ({ query }) => {
   return (
-    <Card variant="outlined" component={Link} to={`/queries/${query.id}`} style={{ textDecoration: 'none', marginBottom: '1rem' }}>
+    <Card variant="outlined" component={Link} to={`/queries/${query.query_id}`} style={{ textDecoration: 'none', marginBottom: '1rem' }}>
       <CardContent>
         <Grid container alignItems="center" spacing={2}>
           <Grid item>
-            {getIcon(query.query_type)}
+            {getIcon(query.query_type)} {query.query_type}
           </Grid>
           <Grid item>
-            <Typography variant="h6">
-              {query.query_type} - {query.employee_name}
-            </Typography>
-            <Typography color="textSecondary">
-              {query.location}
-            </Typography>
-            <Typography color="textSecondary">
-              {query.date}
-            </Typography>
             <Typography color="textSecondary">
               {query.status}
             </Typography>
           </Grid>
+        </Grid>
+        <Grid container alignItems="center" spacing={2}>
+          <Grid item>
+            <Typography variant="h6">
+              {query.employee_id_number} - {query.employee_name}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container alignItems="center" spacing={2}>
+          <Grid item>
+            <Typography color="textSecondary">
+              {query.site}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography color="textSecondary">
+              {query.date_of_query}
+            </Typography>
+          </Grid>         
         </Grid>
       </CardContent>
     </Card>
