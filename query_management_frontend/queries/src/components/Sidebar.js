@@ -1,6 +1,6 @@
 // src/components/Sidebar.js
 import React from 'react';
-import { Box, List, ListItem, ListItemText, Divider, Typography } from '@mui/material';
+import { Box, List, ListItem, ListItemText, Divider, Typography, useMediaQuery } from '@mui/material';
 import { ListItemIcon } from '@mui/material';
 import ReportIcon from '@mui/icons-material/Assessment';
 import AnnouncementIcon from '@mui/icons-material/Announcement';
@@ -14,7 +14,9 @@ import HelpCenterIcon from '@mui/icons-material/HelpOutline';
 import Brightness6OutlinedIcon from '@mui/icons-material/Brightness6Outlined';
 
 const Sidebar = () => {
-  return (
+  const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down('sm'));
+
+  return !isSmallScreen && (
     <Box sx={{ width: 250, paddingRight: '16px', borderRight: '1px solid #ccc' }}>
       <List>
         <ListItem>

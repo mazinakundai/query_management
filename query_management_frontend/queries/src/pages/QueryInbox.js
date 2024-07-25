@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Tabs, Tab, Box, Grid, Typography } from '@mui/material';
+import { Tabs, Tab, Box, Grid, Typography, useMediaQuery, Drawer, IconButton } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import { fetchQueries, updateQueryStatus } from '../api';
 import Sidebar from '../components/Sidebar';
 import QueryList from '../components/QueryList';
@@ -9,6 +10,9 @@ const QueryInbox = () => {
   const [queries, setQueries] = useState([]);
   const [selectedQuery, setSelectedQuery] = useState(null);
   const [tabIndex, setTabIndex] = useState(0);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const isMobile = useMediaQuery('(max-width:600px)');
+  const isTablet = useMediaQuery('(min-width:600px) and (max-width:900px)');
 
   useEffect(() => {
     fetchQueries()
@@ -27,6 +31,9 @@ const QueryInbox = () => {
 
   const handleQuerySelect = (query) => {
     setSelectedQuery(query);
+    if (isMobile || isTablet) {
+      setDrawerOpen(false); // Close the drawer when a query is selected on smaller screens
+    }
   };
 
   const handleMarkAsRead = () => {
@@ -48,18 +55,40 @@ const QueryInbox = () => {
   };
 
   const filteredQueries = queries.filter(
-    query => (tabIndex === 0 && query.status.toLowerCase() === 'open') || 
+    query => (tabIndex === 0 && query.status.toLowerCase() === 'open') ||
              (tabIndex === 1 && query.status.toLowerCase() === 'resolved')
   );
 
   return (
     <Box>
       <Grid container spacing={3}>
-        <Grid item xs={3}>
-          <Sidebar />
-        </Grid>
-        <Grid item xs={9}>
-          <Box sx={{ marginBottom: '16px',borderBottom: '1px solid #ccc' }}>
+        {!isTablet && !isMobile && (
+          <Grid item xs={3}>
+            <Sidebar />
+          </Grid>
+        )}
+        {(isMobile || isTablet) && (
+          <>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={() => setDrawerOpen(true)}
+              sx={{ ml: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Drawer
+              anchor="left"
+              open={drawerOpen}
+              onClose={() => setDrawerOpen(false)}
+            >
+              <Sidebar />
+            </Drawer>
+          </>
+        )}
+        <Grid item xs={isTablet || isMobile ? 12 : 9}>
+          <Box sx={{ marginBottom: '16px', borderBottom: '1px solid #ccc' }}>
             <Typography variant="h4">Query Inbox</Typography>
             <Tabs value={tabIndex} onChange={handleTabChange} aria-label="query detail tabs">
               <Tab label="Open" />
@@ -67,16 +96,33 @@ const QueryInbox = () => {
             </Tabs>
           </Box>
           <Grid container spacing={3}>
-            <Grid item xs={4}>
-              <QueryList queries={filteredQueries} onSelect={handleQuerySelect} />
-            </Grid>
-            <Grid item xs={8}>
-              {selectedQuery ? (
-                <QueryDetail query={selectedQuery} handleMarkAsRead={handleMarkAsRead} />
-              ) : (
-                <Typography>Select a query to view details</Typography>
-              )}
-            </Grid>
+            {isTablet || isMobile ? (
+              <>
+                <Grid item xs={12}>
+                  <QueryList queries={filteredQueries} onSelect={handleQuerySelect} />
+                </Grid>
+                <Grid item xs={12}>
+                  {selectedQuery ? (
+                    <QueryDetail query={selectedQuery} handleMarkAsRead={handleMarkAsRead} />
+                  ) : (
+                    <Typography>Select a query to view details</Typography>
+                  )}
+                </Grid>
+              </>
+            ) : (
+              <>
+                <Grid item xs={4}>
+                  <QueryList queries={filteredQueries} onSelect={handleQuerySelect} />
+                </Grid>
+                <Grid item xs={8}>
+                  {selectedQuery ? (
+                    <QueryDetail query={selectedQuery} handleMarkAsRead={handleMarkAsRead} />
+                  ) : (
+                    <Typography>Select a query to view details</Typography>
+                  )}
+                </Grid>
+              </>
+            )}
           </Grid>
         </Grid>
       </Grid>

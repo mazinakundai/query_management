@@ -1,20 +1,20 @@
 import React from 'react';
-import {Box, List, ListItem, ListItemText, Divider, Typography} from '@mui/material';
+import { Box, List, ListItem, Grid } from '@mui/material';
 import QueryCard from './QueryCard';
 
 const QueryList = ({ queries, onSelect }) => {
   return (
-    <Box sx={{ paddingRight: '16px', borderRight: '1px solid #ccc' }}>
+    <Grid item xs={12} md={12} sx={{ paddingRight: { md: '16px' }, borderRight: { md: '1px solid #ccc' } }}>
       <List>
         {queries.map(query => (
-          <Box sx={{textDecoration: 'none', paddingBottom: '16px', borderBottom: '1px solid #ccc' }}>
-            <ListItem button key={query.id} onClick={() => onSelect(query)}>
+          <Box sx={{ textDecoration: 'none', paddingBottom: '16px', borderBottom: '1px solid #ccc' }} key={query.id}>
+            <ListItem button onClick={() => onSelect(query)}>
               <QueryCard query={query} />
             </ListItem>
-          </Box>         
+          </Box>
         ))}
       </List>
-    </Box>
+    </Grid>
   );
 };
 

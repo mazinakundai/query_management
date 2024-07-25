@@ -19,40 +19,40 @@ const getIcon = (queryType) => {
 
 const QueryCard = ({ query }) => {
   return (
-      <Box>
-        <Grid container alignItems="center" spacing={2}>
-          <Grid item>
-            {getIcon(query.query_type)}
-          </Grid>
-          <Grid item>
-            {query.query_type}
-          </Grid>
-          <Grid item xs>
-            <Typography color="textSecondary">
-              {query.status}
-            </Typography>
-          </Grid>
+    <Box>
+      <Grid container alignItems="center" spacing={2}>
+        <Grid item xs={12} sm="auto">
+          {getIcon(query.query_type)}
         </Grid>
-        <Grid container alignItems="center" spacing={2}>
-          <Grid item>
-            <Typography variant="h6">
-              {query.employee_id_number} - {query.employee_name}
-            </Typography>
-          </Grid>
+        <Grid item xs={12} sm>
+          {query.query_type}
         </Grid>
-        <Grid container alignItems="center" spacing={2}>
-          <Grid item>
-            <Typography color="textSecondary">
-              {query.site}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography color="textSecondary">
-              {query.date_of_query}
-            </Typography>
-          </Grid>         
+        <Grid item xs={12} sm="auto">
+          <Typography color="textSecondary">
+            {query.status}
+          </Typography>
         </Grid>
-      </Box>
+      </Grid>
+      <Grid container alignItems="center" spacing={2}>
+        <Grid item>
+          <Typography variant="h6">
+            {query.employee_id_number} - {query.employee_name}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container alignItems="center" spacing={2}>
+        <Grid item xs={12} sm>
+          <Typography color="textSecondary">
+            {query.site}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm="auto">
+          <Typography color="textSecondary">
+            {query.date_of_query}
+          </Typography>
+        </Grid>         
+      </Grid>
+    </Box>
   );
 };
 
