@@ -1,20 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Tabs, Tab, Box, Button, Typography } from '@mui/material';
-import { fetchQueryDetail, updateQueryStatus } from '../api';
+import React from 'react';
+import { Tabs, Tab, Box, Button, Card, CardContent, Grid, Typography } from '@mui/material';
+import DescriptionIcon from '@mui/icons-material/Description';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import PeopleIcon from '@mui/icons-material/People';
 
-const QueryDetail = ({ handleMarkAsRead }) => {
-  const { id } = useParams();
-  const [query, setQuery] = useState(null);
-  const [tabIndex, setTabIndex] = useState(0);
+const getIcon = (queryType) => {
+  switch (queryType) {
+    case 'Timesheet Query':
+      return <AccessTimeIcon />;
+    case 'Payslip Query':
+      return <DescriptionIcon />;
+    case 'Roster Query':
+      return <PeopleIcon />;
+    default:
+      return <DescriptionIcon />;
+  }
+};
 
-  useEffect(() => {
-    fetchQueryDetail(id).then(response => {
-      setQuery(response.data);
-    }).catch(error => {
-      console.error('Error fetching query:', error);
-    });
-  }, [id]);
+const QueryDetail = ({ query, handleMarkAsRead }) => {
+  const [tabIndex, setTabIndex] = React.useState(0);
 
   const handleTabChange = (event, newIndex) => {
     setTabIndex(newIndex);
@@ -32,14 +36,118 @@ const QueryDetail = ({ handleMarkAsRead }) => {
         <Tab label="Supporting Documents" />
       </Tabs>
       <TabPanel value={tabIndex} index={0}>
-        <Typography variant="h4">{query.query_type}</Typography>
-        <Typography variant="h6">{query.employee_name}</Typography>
-        <Typography variant="subtitle1">{query.location}</Typography>
-        <Typography variant="subtitle2">{new Date(query.date).toLocaleDateString()}</Typography>
-        <Button variant="contained" color={query.status === 'open' ? 'primary' : 'secondary'} onClick={handleMarkAsRead}>
-          {query.status === 'open' ? 'Mark as Resolved' : 'Mark as Open'}
-        </Button>
-        <Typography>{query.overview}</Typography>
+        {/* Query Report Information */}
+        <Card variant="outlined" style={{ textDecoration: 'none', marginBottom: '1rem' }}>
+          <CardContent>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>
+                {getIcon(query.query_type)}
+              </Grid>
+              <Grid item>
+                {query.query_type}
+              </Grid>
+              <Grid item>
+                <Typography color="textSecondary">
+                  {query.status}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Button variant="contained" color={query.status === 'open' ? 'primary' : 'secondary'} onClick={handleMarkAsRead}>
+                  {query.status === 'open' ? 'Mark as Resolved' : 'Mark as Open'}
+                </Button>
+              </Grid>
+            </Grid>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>
+                <Typography variant="h6">
+                  {query.employee_name} ({query.employee_id_number}) submitted a query
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>Branch
+                <Typography color="textSecondary">
+                  {query.branch}
+                </Typography>
+              </Grid>
+              <Grid item>
+                Site
+                <Typography color="textSecondary">
+                  {query.site}
+                </Typography>
+              </Grid>         
+            </Grid>
+          </CardContent>
+        </Card>
+        {/* Query Details Information */}
+        <Card variant="outlined" style={{ textDecoration: 'none', marginBottom: '1rem' }}>
+          <CardContent>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>
+                <Typography variant="h6">
+                 Query details
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>
+                Query reason
+                <Typography color="textSecondary">
+                  {query.query_reason}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>
+                Other information
+                <Typography color="textSecondary">
+                  {query.other_information}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>
+                Date of query
+                <Typography color="textSecondary">
+                  {query.date_of_query}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>
+                Payslip issue date
+                <Typography color="textSecondary">
+                  {query.payslip_issue_date}
+                </Typography>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+        {/* Employee details */}
+        <Card variant="outlined" style={{ textDecoration: 'none', marginBottom: '1rem' }}>
+          <CardContent>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>
+                <Typography variant="h6">
+                 Employee details
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>ID number
+                <Typography color="textSecondary">
+                  {query.employee_id_number}
+                </Typography>
+              </Grid>
+              <Grid item>
+                Contact number
+                <Typography color="textSecondary">
+                  {query.contact_number}
+                </Typography>
+              </Grid>         
+            </Grid>
+          </CardContent>
+        </Card>
       </TabPanel>
       <TabPanel value={tabIndex} index={1}>
         <Typography>{query.details}</Typography>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, CardContent, Typography, Grid } from '@mui/material';
-import { Link } from 'react-router-dom';
 import DescriptionIcon from '@mui/icons-material/Description';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PeopleIcon from '@mui/icons-material/People';
@@ -20,11 +19,14 @@ const getIcon = (queryType) => {
 
 const QueryCard = ({ query }) => {
   return (
-    <Card variant="outlined" component={Link} to={`/queries/${query.query_id}`} style={{ textDecoration: 'none', marginBottom: '1rem' }}>
+    <Card variant="outlined" style={{ textDecoration: 'none', marginBottom: '0.5rem' }}>
       <CardContent>
         <Grid container alignItems="center" spacing={2}>
           <Grid item>
-            {getIcon(query.query_type)} {query.query_type}
+            {getIcon(query.query_type)}
+          </Grid>
+          <Grid item>
+            {query.query_type}
           </Grid>
           <Grid item>
             <Typography color="textSecondary">

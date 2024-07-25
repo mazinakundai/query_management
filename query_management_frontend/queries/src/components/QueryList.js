@@ -1,13 +1,14 @@
 import React from 'react';
-import { List, ListItem } from '@mui/material';
+import { List, ListItem, ListItemText, Divider, Typography} from '@mui/material';
 import QueryCard from './QueryCard';
 
-const QueryList = ({ queries }) => {
+const QueryList = ({ queries, onSelect }) => {
   return (
     <List>
       {queries.map(query => (
-        <ListItem key={query.query_id}>
+        <ListItem key={query.id} onClick={() => onSelect(query)}>
           <QueryCard query={query} />
+          <Divider/>
         </ListItem>
       ))}
     </List>

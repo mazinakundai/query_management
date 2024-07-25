@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { Tabs, Tab, Box, Grid, Typography } from '@mui/material';
-import { fetchQueries, fetchQueryDetail, updateQueryStatus } from '../api';
+import { fetchQueries, updateQueryStatus } from '../api';
 import Sidebar from '../components/Sidebar';
 import QueryList from '../components/QueryList';
 import QueryDetail from '../components/QueryDetail';
 
 const QueryInbox = () => {
-  const { id } = useParams();
   const [queries, setQueries] = useState([]);
-  const [query, setQuery] = useState(null);
+  const [selectedQuery, setSelectedQuery] = useState(null);
   const [tabIndex, setTabIndex] = useState(0);
 
   useEffect(() => {
@@ -20,27 +18,22 @@ const QueryInbox = () => {
       .catch(error => {
         console.error('Error fetching queries:', error);
       });
-
-    if (id) {
-      fetchQueryDetail(id)
-        .then(response => {
-          setQuery(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching query:', error);
-        });
-    }
-  }, [id]);
+  }, []);
 
   const handleTabChange = (event, newIndex) => {
     setTabIndex(newIndex);
+    setSelectedQuery(null); // Clear the selected query when changing tabs
+  };
+
+  const handleQuerySelect = (query) => {
+    setSelectedQuery(query);
   };
 
   const handleMarkAsRead = () => {
-    const newStatus = query.status.toLowerCase() === 'open' ? 'resolved' : 'open';
-    updateQueryStatus(id, { status: newStatus })
+    const newStatus = selectedQuery.status.toLowerCase() === 'open' ? 'resolved' : 'open';
+    updateQueryStatus(selectedQuery.id, { status: newStatus })
       .then(response => {
-        setQuery(response.data);
+        setSelectedQuery(response.data);
         fetchQueries()
           .then(response => {
             setQueries(response.data);
@@ -73,11 +66,11 @@ const QueryInbox = () => {
           </Tabs>
           <Grid container spacing={3}>
             <Grid item xs={4}>
-              <QueryList queries={filteredQueries} />
+              <QueryList queries={filteredQueries} onSelect={handleQuerySelect} />
             </Grid>
             <Grid item xs={8}>
-              {query ? (
-                <QueryDetail query={query} handleMarkAsRead={handleMarkAsRead} />
+              {selectedQuery ? (
+                <QueryDetail query={selectedQuery} handleMarkAsRead={handleMarkAsRead} />
               ) : (
                 <Typography>Select a query to view details</Typography>
               )}
