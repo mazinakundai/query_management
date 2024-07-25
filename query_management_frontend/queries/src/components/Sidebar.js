@@ -1,6 +1,6 @@
 // src/components/Sidebar.js
 import React from 'react';
-import { List, ListItem, ListItemText, Divider, Typography } from '@mui/material';
+import { Box, List, ListItem, ListItemText, Divider, Typography } from '@mui/material';
 import { ListItemIcon } from '@mui/material';
 import ReportIcon from '@mui/icons-material/Assessment';
 import AnnouncementIcon from '@mui/icons-material/Announcement';
@@ -15,7 +15,7 @@ import Brightness6OutlinedIcon from '@mui/icons-material/Brightness6Outlined';
 
 const Sidebar = () => {
   return (
-    <div style={{ width: 250 }}>
+    <Box sx={{ width: 250, paddingRight: '16px', borderRight: '1px solid #ccc' }}>
       <List>
         <ListItem>
           <img src="/path/to/jem-logo.png" alt="Jem Logo" style={{ width: '50px' }} />
@@ -86,7 +86,7 @@ const Sidebar = () => {
           </Typography>
         </ListItem>
       </List>
-    </div>
+    </Box>
   );
 };
 

@@ -59,11 +59,13 @@ const QueryInbox = () => {
           <Sidebar />
         </Grid>
         <Grid item xs={9}>
-          <Typography variant="h6">Query Inbox</Typography>
-          <Tabs value={tabIndex} onChange={handleTabChange} aria-label="query detail tabs">
-            <Tab label="Open" />
-            <Tab label="Resolved" />
-          </Tabs>
+          <Box sx={{ marginBottom: '16px',borderBottom: '1px solid #ccc' }}>
+            <Typography variant="h4">Query Inbox</Typography>
+            <Tabs value={tabIndex} onChange={handleTabChange} aria-label="query detail tabs">
+              <Tab label="Open" />
+              <Tab label="Resolved" />
+            </Tabs>
+          </Box>
           <Grid container spacing={3}>
             <Grid item xs={4}>
               <QueryList queries={filteredQueries} onSelect={handleQuerySelect} />

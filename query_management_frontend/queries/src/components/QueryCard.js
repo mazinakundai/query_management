@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, Grid } from '@mui/material';
+import { Card, CardContent, Typography, Grid, Box } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PeopleIcon from '@mui/icons-material/People';
@@ -19,8 +19,7 @@ const getIcon = (queryType) => {
 
 const QueryCard = ({ query }) => {
   return (
-    <Card variant="outlined" style={{ textDecoration: 'none', marginBottom: '0.5rem' }}>
-      <CardContent>
+      <Box>
         <Grid container alignItems="center" spacing={2}>
           <Grid item>
             {getIcon(query.query_type)}
@@ -28,7 +27,7 @@ const QueryCard = ({ query }) => {
           <Grid item>
             {query.query_type}
           </Grid>
-          <Grid item>
+          <Grid item xs>
             <Typography color="textSecondary">
               {query.status}
             </Typography>
@@ -53,8 +52,7 @@ const QueryCard = ({ query }) => {
             </Typography>
           </Grid>         
         </Grid>
-      </CardContent>
-    </Card>
+      </Box>
   );
 };
 
