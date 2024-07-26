@@ -51,13 +51,15 @@ const QueryDetail = ({ query, handleMarkAsRead }) => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Tabs value={tabIndex} onChange={handleTabChange} aria-label="query detail tabs" variant="scrollable" scrollButtons="auto">
-        <Tab label="Details" />
-        <Tab label="Payslips" />
-        <Tab label="Supporting Documents" />
-      </Tabs>
+      <Box sx={{ marginBottom: '1rem', borderBottom: '2px solid #e0e0e0' }}>
+        <Tabs value={tabIndex} onChange={handleTabChange} aria-label="query detail tabs" variant="scrollable" scrollButtons="auto">
+          <Tab label="Details" />
+          <Tab label="Payslips" />
+          <Tab label="Supporting Documents" />
+        </Tabs>
+      </Box>
       <TabPanel value={tabIndex} index={0}>
-        <Box sx={{ marginBottom: '1rem', paddingBottom: '10px', borderBottom: '2px solid #ccc' }}>
+        <Box sx={{ marginBottom: '1rem', paddingBottom: '10px', borderBottom: '2px solid #e0e0e0' }}>
           <Box display="flex" justifyContent="space-between">
             <Box display="flex" alignItems="center" flex={1}>
               <Typography color="textSecondary">
@@ -68,9 +70,23 @@ const QueryDetail = ({ query, handleMarkAsRead }) => {
               </Typography>
             </Box>
             <Box display="flex" alignItems="center" flex={1}>
-              <Typography color="textSecondary">
-                {query.status}
-              </Typography>
+            <Box
+                sx={{
+                  display: 'inline-block',
+                  padding: '2px 12px',
+                  borderRadius: '999px',
+                  backgroundColor: '#e0f7e0', // Faint green background
+                  marginLeft: '8px'
+                }}
+              >
+                <Typography
+                  sx={{
+                    color: '#2e7d32' // Darker green font color
+                  }}
+                >
+                  {query.status}
+                </Typography>
+              </Box>
               <Typography color="textSecondary" style={{ marginLeft: '8px' }}>
                 <Button
                   variant="contained"
@@ -106,7 +122,7 @@ const QueryDetail = ({ query, handleMarkAsRead }) => {
             </Box>
           </Box>
         </Box>
-        <Box sx={{ paddingBottom: '10px', marginBottom: '1rem', borderBottom: '2px solid #ccc' }}>
+        <Box sx={{ paddingBottom: '10px', marginBottom: '1rem', borderBottom: '2px solid #e0e0e0' }}>
           <Box>
             <Typography variant="h6" gutterBottom>
               Query Details
@@ -137,7 +153,7 @@ const QueryDetail = ({ query, handleMarkAsRead }) => {
             </Typography>
           </Box>
         </Box>
-        <Box sx={{ paddingBottom: '10px', borderBottom: '2px solid #ccc' }}>
+        <Box sx={{ paddingBottom: '10px', borderBottom: '2px solid #e0e0e0' }}>
           <Typography variant="h6" gutterBottom>
             Employee Details
           </Typography>

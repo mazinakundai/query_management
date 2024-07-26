@@ -30,10 +30,24 @@ const QueryCard = ({ query }) => {
           </Typography>
         </Box>
         <Box display="flex" alignItems="center" justifyContent="flex-end" flex={1}>
-          <Typography color="textSecondary">
-            {query.status}
-          </Typography>
-        </Box>
+          <Box
+              sx={{
+                display: 'inline-block',
+                padding: '2px 12px',
+                borderRadius: '999px',
+                backgroundColor: '#e0f7e0', // Faint green background
+                marginLeft: '8px'
+              }}
+            >
+              <Typography
+                sx={{
+                  color: '#2e7d32' // Darker green font color
+                }}
+              >
+                {query.status}
+              </Typography>
+            </Box>
+          </Box>
       </Box>
       <Box>
         <Typography variant="h6">

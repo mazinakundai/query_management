@@ -94,7 +94,7 @@ const QueryInbox = () => {
             </>
           )}
           <Grid item xs={isTablet || isMobile ? 12 : 9}>
-            <Box sx={{ marginBottom: '16px', borderBottom: '2px solid #ccc' }}>
+            <Box sx={{ marginBottom: '16px', borderBottom: '2px solid #e0e0e0' }}>
               <Typography variant="h4">Query Inbox</Typography>
               <Tabs value={tabIndex} onChange={handleTabChange} aria-label="query detail tabs">
                 <Tab label="Open" />
