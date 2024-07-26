@@ -19,39 +19,39 @@ const getIcon = (queryType) => {
 
 const QueryCard = ({ query }) => {
   return (
-    <Box>
-      <Grid container alignItems="center" spacing={2}>
-        <Grid item xs={12} sm="auto">
-          {getIcon(query.query_type)}
-        </Grid>
-        <Grid item xs={12} sm>
-          {query.query_type}
-        </Grid>
-        <Grid item xs={12} sm="auto">
+    <Box width="100%">
+      <Box display="flex" justifyContent="space-between">
+        <Box display="flex" alignItems="center" flex={1}>
+          <Typography color="textSecondary">
+            {getIcon(query.query_type)}
+          </Typography>
+          <Typography color="textSecondary" style={{ marginLeft: '8px' }}>
+            {query.query_type}
+          </Typography>
+        </Box>
+        <Box display="flex" alignItems="center" justifyContent="flex-end" flex={1}>
           <Typography color="textSecondary">
             {query.status}
           </Typography>
-        </Grid>
-      </Grid>
-      <Grid container alignItems="center" spacing={2}>
-        <Grid item>
-          <Typography variant="h6">
-            {query.employee_id_number} - {query.employee_name}
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid container alignItems="center" spacing={2}>
-        <Grid item xs={12} sm>
-          <Typography color="textSecondary">
+        </Box>
+      </Box>
+      <Box>
+        <Typography variant="h6">
+          {query.employee_id_number} - {query.employee_name}
+        </Typography>
+      </Box>
+      <Box display="flex" justifyContent="space-between">
+        <Box flex={1}>
+          <Typography color="textSecondary" gutterBottom>
             {query.site}
           </Typography>
-        </Grid>
-        <Grid item xs={12} sm="auto">
-          <Typography color="textSecondary">
+        </Box>
+        <Box flex={1}>
+          <Typography color="textSecondary" gutterBottom>
             {query.date_of_query}
           </Typography>
-        </Grid>         
-      </Grid>
+        </Box>
+      </Box>
     </Box>
   );
 };

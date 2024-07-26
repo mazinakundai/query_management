@@ -1,9 +1,10 @@
 import React from 'react';
-import { Tabs, Tab, Box, Button, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Tabs, Tab, Box, Button, Typography } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PeopleIcon from '@mui/icons-material/People';
 
+// Helper function to get the appropriate icon based on the query type
 const getIcon = (queryType) => {
   switch (queryType) {
     case 'Timesheet Query':
@@ -17,6 +18,7 @@ const getIcon = (queryType) => {
   }
 };
 
+// TabPanel component to render the content of each tab
 const TabPanel = ({ children, value, index, ...other }) => {
   return (
     <div
@@ -35,6 +37,7 @@ const TabPanel = ({ children, value, index, ...other }) => {
   );
 };
 
+// QueryDetail component to display detailed information about a selected query
 const QueryDetail = ({ query, handleMarkAsRead }) => {
   const [tabIndex, setTabIndex] = React.useState(0);
 
@@ -54,91 +57,115 @@ const QueryDetail = ({ query, handleMarkAsRead }) => {
         <Tab label="Supporting Documents" />
       </Tabs>
       <TabPanel value={tabIndex} index={0}>
-        <Card sx={{ marginBottom: '1rem' }}>
-          <CardContent>
-            <Grid container alignItems="center" spacing={2}>
-              <Grid item xs={12} sm="auto">
+        <Box sx={{ marginBottom: '1rem', paddingBottom: '10px', borderBottom: '2px solid #ccc' }}>
+          <Box display="flex" justifyContent="space-between">
+            <Box display="flex" alignItems="center" flex={1}>
+              <Typography color="textSecondary">
                 {getIcon(query.query_type)}
-              </Grid>
-              <Grid item xs={12} sm>
+              </Typography>
+              <Typography color="textSecondary" style={{ marginLeft: '8px' }}>
                 {query.query_type}
-              </Grid>
-              <Grid item xs={12} sm>
-                <Typography color="textSecondary">
-                  {query.status}
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm="auto">
+              </Typography>
+            </Box>
+            <Box display="flex" alignItems="center" flex={1}>
+              <Typography color="textSecondary">
+                {query.status}
+              </Typography>
+              <Typography color="textSecondary" style={{ marginLeft: '8px' }}>
                 <Button
                   variant="contained"
-                  color={query.status === 'open' ? 'primary' : 'secondary'}
+                  color={query.status === 'Open' ? 'primary' : 'secondary'}
                   onClick={handleMarkAsRead}
                 >
-                  {query.status === 'open' ? 'Mark as Resolved' : 'Mark as Open'}
+                  {query.status === 'Open' ? 'Mark as Resolved' : 'Mark as Open'}
                 </Button>
-              </Grid>
-            </Grid>
-            <Grid container alignItems="center" spacing={2} sx={{ marginTop: 1 }}>
-              <Grid item xs={12}>
-                <Typography variant="h6">
-                  {query.employee_name} ({query.employee_id_number}) submitted a query
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid container alignItems="center" spacing={2} sx={{ marginTop: 1 }}>
-              <Grid item xs={12} sm>
-                Branch
-                <Typography color="textSecondary">
-                  {query.branch}
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm>
-                Site
-                <Typography color="textSecondary">
-                  {query.site}
-                </Typography>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
-        <Card variant="outlined" sx={{ marginBottom: '1rem' }}>
-          <CardContent>
+              </Typography>
+            </Box>
+          </Box>
+          <Box item xs={12}>
+            <Typography variant="h6">
+              {query.employee_name} ({query.employee_id_number}) submitted a query
+            </Typography>
+          </Box>
+          <Box display="flex">
+            <Box flex={1}>
+              <Typography style={{ fontSize: '0.75rem', color: 'lightgrey' }} gutterBottom>
+                Branch:
+              </Typography>
+              <Typography color="textSecondary">
+                {query.branch}
+              </Typography>
+            </Box>
+            <Box flex={1}>
+              <Typography style={{ fontSize: '0.75rem', color: 'lightgrey' }} gutterBottom>
+                Site:
+              </Typography>
+              <Typography color="textSecondary">
+                {query.site}
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+        <Box sx={{ paddingBottom: '10px', marginBottom: '1rem', borderBottom: '2px solid #ccc' }}>
+          <Box>
             <Typography variant="h6" gutterBottom>
               Query Details
             </Typography>
-            <Typography color="textSecondary" gutterBottom>
-              Query reason: {query.query_reason}
+            <Typography style={{ fontSize: '0.75rem', color: 'lightgrey' }} gutterBottom>
+              Query reason:
             </Typography>
             <Typography color="textSecondary" gutterBottom>
-              Other information: {query.other_information}
+              {query.query_reason}
+            </Typography>
+            <Typography style={{ fontSize: '0.75rem', color: 'lightgrey' }} gutterBottom>
+              Other information:
             </Typography>
             <Typography color="textSecondary" gutterBottom>
-              Date of query: {query.date_of_query}
+              {query.other_information}
+            </Typography>
+            <Typography style={{ fontSize: '0.75rem', color: 'lightgrey' }} gutterBottom>
+              Date of query:
             </Typography>
             <Typography color="textSecondary" gutterBottom>
-              Payslip issue date: {query.payslip_issue_date}
+              {query.date_of_query}
             </Typography>
-          </CardContent>
-        </Card>
-        <Card variant="outlined" sx={{ marginBottom: '1rem' }}>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              Employee Details
+            <Typography style={{ fontSize: '0.75rem', color: 'lightgrey' }} gutterBottom>
+              Payslip issue date:
             </Typography>
             <Typography color="textSecondary" gutterBottom>
-              ID number: {query.employee_id_number}
+              {query.payslip_issue_date}
             </Typography>
-            <Typography color="textSecondary" gutterBottom>
-              Contact number: {query.contact_number}
-            </Typography>
-          </CardContent>
-        </Card>
+          </Box>
+        </Box>
+        <Box sx={{ paddingBottom: '10px', borderBottom: '2px solid #ccc' }}>
+          <Typography variant="h6" gutterBottom>
+            Employee Details
+          </Typography>
+          <Box display="flex">
+            <Box flex={1}>
+              <Typography style={{ fontSize: '0.75rem', color: 'lightgrey' }} gutterBottom>
+                ID number:
+              </Typography>
+              <Typography color="textSecondary" gutterBottom>
+                {query.employee_id_number}
+              </Typography>
+            </Box>
+            <Box flex={1}>
+              <Typography style={{ fontSize: '0.75rem', color: 'lightgrey' }} gutterBottom>
+                Contact number:
+              </Typography>
+              <Typography color="textSecondary" gutterBottom>
+                {query.contact_number}
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
       </TabPanel>
       <TabPanel value={tabIndex} index={1}>
-        <Typography>{query.details}</Typography>
+        <Typography>Payslips content goes here</Typography>
       </TabPanel>
       <TabPanel value={tabIndex} index={2}>
-        <Typography>{query.comments}</Typography>
+        <Typography>Supporting Documents content goes here</Typography>
       </TabPanel>
     </Box>
   );

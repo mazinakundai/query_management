@@ -10,7 +10,7 @@ export const fetchQueries = () => api.get('/queries/');
 // Get Query by id
 export const fetchQueryDetail = (id) => api.get(`/queries/${id}/`);
 
-// update the query status
-export const updateQueryStatus = (id, data) => {
-  return api.patch(`/queries/${id}/`, data);
+// Update the query status
+export const updateQueryStatus = (query) => {
+  return api.put(`/queries/${query.query_id}/`, query);
 };

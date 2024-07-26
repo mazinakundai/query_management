@@ -1,0 +1,62 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: 'query_management'
+      MYSQL_USER: 'queryMgtUser'
+      MYSQL_PASSWORD: 'queryMgtPass01#'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3307:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - jem_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./query_management
+      dockerfile: Dockerfile
+    container_name: backend
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./query_management:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - jem_net
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=query_management
+      - DATABASE_USER=queryMgtUser
+      - DATABASE_PASSWORD=queryMgtPass01#
+
+  frontend:
+    build:
+      context: ./query_management_frontend/queries
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./query_management_frontend/queries:/app
+    networks:
+      - jem_net
+
+volumes:
+  mysql_data:
+
+networks:
+  jem_net:
+    driver: bridge

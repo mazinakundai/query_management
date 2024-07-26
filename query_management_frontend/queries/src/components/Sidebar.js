@@ -17,7 +17,7 @@ const Sidebar = () => {
   const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
   return !isSmallScreen && (
-    <Box sx={{ width: 250, paddingRight: '16px', borderRight: '1px solid #ccc' }}>
+    <Box sx={{ width: 250, paddingRight: '16px', borderRight: '2px solid #ccc' }}>
       <List>
         <ListItem>
           <img src="/path/to/jem-logo.png" alt="Jem Logo" style={{ width: '50px' }} />
