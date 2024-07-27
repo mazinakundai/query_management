@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'query_management.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+#For use locally. Please uncomment when running from a docker container
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -99,7 +99,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-#For use in a Container
+#For use in a Container. Please uncomment when running from a docker container
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
